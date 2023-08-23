@@ -8,3 +8,5 @@ const pool = new Pool({
   password: 'fullstack_93',
   port: 5432,
 });
+
+export default pool
