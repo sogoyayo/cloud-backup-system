@@ -14,6 +14,10 @@ const app: Application = express();
 const port: Number = Number(process.env.PORT)|| 5000;
 
 
+// middleware
+import notFoundMiddleware from'./middleware/not-found';
+import errorHandlerMiddleware from'./middleware/error-handler';
+
 // app.use((req, res, next) => {
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
 //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -49,15 +53,8 @@ app.use('/api/v1/auth', authRouter);
 
 
 //   Error middleware
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-    res.status(err.status || 500);
-    err.send({
-        status: err.status || 500,
-        message: err.message,
-    })
-}
-
-app.use(errorHandler);
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 
 const server: Server = app.listen(port, () => {
